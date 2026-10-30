@@ -1,0 +1,159 @@
+.heading {
+  max-width: 690px;
+}
+.heading > span {
+  display: inline-block;
+}
+.heading h2 {
+  font-size: clamp(30px, 3.4vw, 43px);
+  font-weight: 650;
+  line-height: 1.18;
+  letter-spacing: -0.035em;
+}
+.heading p {
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.8;
+  margin-top: 20px;
+  max-width: 620px;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 28px;
+  margin-top: 38px;
+}
+.plan {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 34px;
+  border: 1px solid #d1def1;
+  border-radius: 20px;
+  background: #fff;
+}
+.label {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  color: #0057d6;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 22px;
+}
+.label svg {
+  flex-shrink: 0;
+}
+.plan h3 {
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+.description {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.8;
+  margin-top: 14px;
+  min-height: 76px;
+}
+.plan dl {
+  margin: 24px 0 30px;
+}
+.plan dl > div {
+  display: grid;
+  grid-template-columns: 105px 1fr;
+  gap: 14px;
+  border-top: 1px solid #e0e7f2;
+  padding-block: 15px;
+  font-size: 13px;
+  line-height: 1.7;
+}
+.plan dt {
+  color: var(--ink);
+  font-weight: 550;
+}
+.plan dd {
+  color: var(--muted);
+}
+.plan > a {
+  margin-top: auto;
+  width: 100%;
+}
+.foot {
+  margin-top: 24px;
+  padding: 24px 28px;
+  background: #eaf2ff;
+  border-radius: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+.foot h3 {
+  font-size: 18px;
+  font-weight: 600;
+}
+.foot p {
+  font-size: 14px;
+  color: var(--muted);
+  margin-top: 5px;
+}
+.note {
+  font-size: 12px;
+  line-height: 1.8;
+  color: var(--muted);
+  max-width: 850px;
+  margin-top: 20px;
+}
+@media (max-width: 1000px) {
+  .plan {
+    padding: 26px;
+  }
+  .plan h3 {
+    font-size: 25px;
+  }
+  .description {
+    min-height: 100px;
+  }
+  .plan dl > div {
+    grid-template-columns: 85px 1fr;
+  }
+}
+@media (max-width: 767px) {
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    margin-top: 28px;
+  }
+  .description {
+    min-height: 0;
+  }
+  .heading h2 {
+    font-size: 32px;
+  }
+  .foot {
+    align-items: stretch;
+    flex-direction: column;
+    padding: 24px;
+  }
+  .plan {
+    padding: 24px;
+  }
+  .plan > a,
+  .foot > a {
+    font-size: 14px;
+    min-height: 48px;
+  }
+}
+@media (max-width: 359px) {
+  .plan {
+    padding: 21px;
+  }
+  .plan dl > div {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+  .label {
+    font-size: 12px;
+  }
+}

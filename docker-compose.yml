@@ -1,0 +1,17 @@
+services:
+  node:
+    build:
+      context: .
+      dockerfile: ./docker/development/Dockerfile
+      args:
+        UID: "${UID:-1000}"
+        GID: "${GID:-1000}"
+        CONTAINER_USER: "${CONTAINER_USER:-developer}"
+    volumes:
+      - .:/app
+  app:
+    extends:
+      service: node
+    command: sh -c "npm install && npm run dev -- --port ${FORWARD_VITE_PORT:-3000}"
+    ports:
+      - ${FORWARD_VITE_PORT:-3000}:3000

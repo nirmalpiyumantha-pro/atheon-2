@@ -1,0 +1,186 @@
+.background {
+  background: var(--surface-blue);
+  border-block: 1px solid #d6e3f5;
+}
+.intro {
+  display: grid;
+  grid-template-columns: 1fr 1.05fr;
+  gap: 56px;
+  align-items: center;
+}
+.copy > span {
+  display: inline-block;
+  background: var(--surface-base);
+}
+.copy h2 {
+  font-size: clamp(30px, 3.3vw, 43px);
+  line-height: 1.18;
+  font-weight: 650;
+  letter-spacing: -0.035em;
+  text-wrap: pretty;
+}
+.copy > p {
+  font-size: 15px;
+  line-height: 1.85;
+  color: var(--muted);
+  margin: 22px 0 25px;
+  max-width: 550px;
+}
+.art {
+  margin: 0;
+  min-width: 0;
+}
+.art img {
+  width: 100%;
+  height: auto;
+  border-radius: 22px;
+  border: 1px solid #cfdef2;
+}
+.highlights {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-top: 52px;
+  gap: 28px;
+}
+.highlights article {
+  border-top: 1px solid #c6d7ee;
+  padding-top: 25px;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.icon {
+  color: #0069ff;
+  margin-bottom: 17px;
+}
+.highlights h3 {
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: -0.025em;
+  text-wrap: pretty;
+}
+.highlights p,
+.supporting p {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.8;
+  margin-top: 13px;
+}
+.example {
+  font-size: 12px;
+  color: #365574;
+  line-height: 1.7;
+  padding: 15px 0 0;
+  margin-top: auto;
+}
+.more {
+  margin-top: 45px;
+  padding: 30px;
+  border: 1px solid #d1dff1;
+  background: var(--surface-base);
+  border-radius: 18px;
+}
+.more > h3 {
+  font-size: 24px;
+  line-height: 1.4;
+  font-weight: 600;
+  margin-bottom: 26px;
+}
+.supporting {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 35px;
+}
+.supporting svg {
+  color: #0069ff;
+  margin-bottom: 12px;
+}
+.supporting h4 {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+.supporting p {
+  font-size: 13px;
+  margin-top: 9px;
+}
+.note {
+  color: #536783;
+  font-size: 12px;
+  line-height: 1.8;
+  margin-top: 20px;
+  max-width: 800px;
+}
+@media (max-width: 1100px) {
+  .intro {
+    gap: 32px;
+  }
+  .highlights {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 32px;
+  }
+}
+@media (max-width: 767px) {
+  .intro {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+  .copy h2 {
+    font-size: clamp(29px, 7.5vw, 36px);
+  }
+  .copy > p {
+    font-size: 15px;
+    line-height: 1.75;
+    margin-block: 18px 23px;
+  }
+  .copy .button {
+    width: 100%;
+    min-height: 48px;
+  }
+  .art img {
+    border-radius: 15px;
+  }
+  .highlights {
+    margin-top: 32px;
+    gap: 27px;
+  }
+  .highlights h3 {
+    font-size: 18px;
+  }
+  .more {
+    margin-top: 32px;
+    padding: 24px;
+  }
+  .supporting {
+    grid-template-columns: 1fr;
+    gap: 25px;
+  }
+  .supporting article + article {
+    border-top: 1px solid #d3e0f0;
+    padding-top: 24px;
+  }
+  .supporting p {
+    font-size: 14px;
+  }
+}
+@media (max-width: 540px) {
+  .highlights {
+    grid-template-columns: 1fr;
+  }
+  .highlights article {
+    padding-top: 22px;
+  }
+  .icon {
+    margin-bottom: 12px;
+  }
+  .highlights h3 {
+    font-size: 20px;
+  }
+  .example {
+    padding-top: 12px;
+  }
+  .more {
+    padding: 22px;
+  }
+}

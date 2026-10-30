@@ -1,0 +1,449 @@
+.scene {
+  width: 100%;
+  max-width: 525px;
+  margin: 0 auto;
+  min-width: 0;
+  container-type: inline-size;
+}
+.player {
+  position: relative;
+}
+.srOnly,
+.pauseInput {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+.canvas {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 32px;
+  padding: 14px 8px 25px;
+  isolation: isolate;
+}
+.request,
+.working,
+.confirmation {
+  position: relative;
+  min-width: 0;
+  flex-shrink: 0;
+  --face: #fff;
+  --edge: #d7e3f2;
+  --border: #d6e2f2;
+  filter: drop-shadow(0 12px 12px #1e477a20);
+}
+.surface {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+  filter: drop-shadow(0 3px 0 var(--edge));
+}
+.surface[data-right="true"] { transform: scaleX(-1); }
+.face {
+  fill: var(--face);
+  stroke: var(--border);
+  stroke-width: 1;
+  stroke-linejoin: round;
+}
+.bubbleBody {
+  position: relative;
+  padding: 20px 22px;
+}
+.request {
+  width: 84%;
+  animation: requestIn .65s cubic-bezier(.2,.7,.2,1) both;
+}
+.working,
+.confirmation {
+  width: 91%;
+  align-self: flex-end;
+}
+.working {
+  animation: messageIn .7s .95s cubic-bezier(.2,.7,.2,1) both;
+}
+.confirmation {
+  --face: #0069ff;
+  --edge: #005bdc;
+  --border: #0061eb;
+  color: #fff;
+  animation: messageIn .85s 4.9s cubic-bezier(.2,.7,.2,1) both;
+}
+.sender {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #405774;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+.customerIcon {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #eef3fb;
+  color: #52749d;
+}
+.messageTime {
+  margin-left: auto;
+  font-size: 13px;
+  font-weight: 400;
+  color: #405774;
+}
+.request p {
+  margin: 10px 0 0;
+  font-size: 17px;
+  line-height: 1.6;
+  letter-spacing: -0.02em;
+  font-weight: 500;
+  color: #193250;
+}
+.workHeading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+.brandIdentity {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 4px 7px;
+  border-radius: 8px;
+  background: #f1f5fb;
+  border: 1px solid #d6e2f2;
+  color: #0057d6;
+}
+.brandIdentity img {
+  width: 19px;
+  height: 21px;
+  object-fit: contain;
+}
+.workLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 8px;
+  border: 1px solid #c7daf5;
+  border-radius: 999px;
+  background: #eaf2ff;
+  color: #354f70;
+  font-size: 13px;
+  font-weight: 500;
+}
+.bookedLabel {
+  background: #ecfdf3;
+  border-color: #b7e5c8;
+  color: #116b3b;
+  font-weight: 600;
+}
+.workTitle {
+  font-size: 16px;
+  line-height: 1.55;
+  font-weight: 500;
+  color: #244264;
+  margin: 14px 0 12px;
+  letter-spacing: -0.02em;
+}
+.task {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 30px;
+  padding-block: 4px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #354f70;
+}
+.task > svg {
+  flex-shrink: 0;
+  color: #4781d2;
+}
+.taskText {
+  min-width: 0;
+  display: grid;
+}
+.taskText > span {
+  grid-area: 1/1;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.taskText svg {
+  flex-shrink: 0;
+  color: #127946;
+}
+.spinner {
+  display: block;
+  width: 13px;
+  height: 13px;
+  flex: 0 0 13px;
+  animation: spin 0.9s linear 6;
+  border: 1.5px solid #ccdef8;
+  border-top-color: #0069ff;
+  border-radius: 50%;
+}
+.pendingFirst,
+.pendingSecond {
+  opacity: 0;
+}
+.doneFirst,
+.doneSecond {
+  opacity: 1;
+}
+.pendingFirst {
+  animation: pendingOut 0.25s 2.9s both;
+}
+.pendingSecond {
+  animation: pendingOut 0.25s 4.2s both;
+}
+.doneFirst {
+  animation: doneIn 0.3s 2.9s both;
+}
+.doneSecond {
+  animation: doneIn 0.3s 4.2s both;
+}
+.serviceTitle {
+  font-size: 21px;
+  line-height: 1.35;
+  letter-spacing: -0.025em;
+  font-weight: 550;
+  margin: 14px 0 10px;
+  color: #fff;
+  text-wrap: pretty;
+}
+.appointment {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  line-height: 1.7;
+}
+.appointment strong {
+  font-weight: 500;
+}
+.technician {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #fff;
+  margin: 5px 0 0;
+}
+.outcomes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  margin-top: 14px;
+  padding-top: 0;
+
+}
+.outcomes span {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #fff;
+}
+.outcomes svg {
+  flex-shrink: 0;
+  color: #fff;
+}
+.calendarOutcome {
+  animation: outcomeIn 0.45s 5.9s both;
+}
+.emailOutcome {
+  animation: outcomeIn 0.45s 6.5s both;
+}
+.sceneFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+  min-height: 36px;
+  margin-top: 5px;
+  padding: 0 8px;
+}
+.sceneFooter > span {
+  font-size: 13px;
+  line-height: 1.7;
+  color: #465e7c;
+}
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+.controls button,
+.pauseControl {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  min-height: 36px;
+  padding: 5px 0;
+  color: #465e7c;
+  font: inherit;
+  font-size: 13px;
+  line-height: 1.5;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+}
+.controls button:hover,
+.pauseControl:hover {
+  color: #005cde;
+}
+.pauseControl,
+.pauseInput {
+  animation: hidePause 0.01s 7.7s forwards;
+}
+.pauseLabel,
+.resumeLabel {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.resumeLabel {
+  display: none;
+}
+.player:has(.pauseInput:checked) .canvas *,
+.player:has(.pauseInput:checked) .pauseControl,
+.player:has(.pauseInput:checked) .pauseInput {
+  animation-play-state: paused;
+}
+.player:has(.pauseInput:checked) .pauseLabel {
+  display: none;
+}
+.player:has(.pauseInput:checked) .resumeLabel {
+  display: flex;
+}
+.pauseInput:focus-visible ~ .sceneFooter .pauseControl {
+  outline: 3px solid #0069ff;
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+@keyframes requestIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes messageIn {
+  from {
+    opacity: 0;
+    transform: translateY(19px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes pendingOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+@keyframes doneIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes outcomeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes hidePause {
+  to {
+    visibility: hidden;
+  }
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@container (max-width:420px) {
+  .canvas { padding-inline: 4px; gap: 30px; }
+  .request { width: 91%; }
+  .working, .confirmation { width: 96%; }
+  .bubbleBody { padding: 18px; }
+  .request p { font-size: 16px; }
+  .workTitle { font-size: 16px; }
+  .task { font-size: 13px; }
+  .serviceTitle { font-size: 20px; }
+  .outcomes { flex-direction: column; gap: 5px; }
+  .sceneFooter { padding-inline: 4px; }
+}
+@container (max-width:320px) {
+  .bubbleBody { padding: 17px 16px; }
+  .request { width: 95%; }
+  .working, .confirmation { width: 98%; }
+  .workHeading { gap: 6px; }
+  .brandIdentity { padding: 3px 5px; gap: 5px; }
+  .workLabel { padding: 4px 6px; font-size: 12px; }
+  .brandIdentity img { width: 17px; height: 19px; }
+  .request p { font-size: 16px; }
+  .serviceTitle { font-size: 19px; }
+  .sceneFooter { gap: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .player .canvas *,
+  .player .pauseControl {
+    animation: none !important;
+  }
+  .pendingFirst,
+  .pendingSecond {
+    display: none;
+  }
+  .controls,
+  .pauseInput {
+    display: none;
+  }
+  .doneFirst,
+  .doneSecond,
+  .calendarOutcome,
+  .emailOutcome {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 767px) {
+  .canvas { padding-top: 8px; }
+  .controls button, .pauseControl { min-height: 44px; min-width: 44px; }
+}
