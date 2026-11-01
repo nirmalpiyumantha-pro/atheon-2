@@ -25,9 +25,6 @@ export function Index() {
             </EnquiryLink>
             <PromoPlayer />
           </div>
-          <p className="hero-service-note">
-            Managed by Atheon or deployed on your infrastructure.
-          </p>
         </div>
         <BookingScene />
       </Container>

@@ -3,7 +3,7 @@
 This copy matches the latest published Atheon site, including the integrations ribbon,
 updated plans, compact hero confirmation, consistent page alignment and subtle animations.
 The agent feature copy is concise; process, approval and support details sit in the existing agent, plans and FAQ sections.
-Hosted-site source commit: d55e647914b1aaaa8a1693e2b200fd57d3930adf
+Hosted-site source commit: 31c0141fb06c85060bfb109fc7b02e2cb5e55127
 
 ## Open and run on Windows / VS Code
 

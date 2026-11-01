@@ -1,13 +1,11 @@
 "use client"
 
-import { useEffect, useId, useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import Image from "next/image"
 import logo from "@/assets/images/logo.png"
 import {
   Check,
   MessageSquare,
-  Pause,
-  Play,
 } from "lucide-react"
 import s from "./booking-scene.module.css"
 
@@ -54,7 +52,6 @@ function AtheonHeader() {
 }
 
 export function BookingScene() {
-  const pauseId = useId()
   return (
     <figure
       className={s.scene}
@@ -67,12 +64,6 @@ export function BookingScene() {
         updated, and a confirmation is sent.
       </figcaption>
       <div className={s.player}>
-        <input
-          id={pauseId}
-          type="checkbox"
-          className={s.pauseInput}
-          aria-label="Pause animation"
-        />
         <div className={s.canvas} aria-hidden="true">
           <div className={s.request}>
             <BubbleSurface tail />
@@ -144,20 +135,6 @@ export function BookingScene() {
                 </span>
               </div>
             </div>
-          </div>
-        </div>
-        <div className={s.sceneFooter}>
-          <div className={s.controls}>
-            <label htmlFor={pauseId} className={s.pauseControl}>
-              <span className={s.pauseLabel}>
-                <Pause size={12} />
-                Pause
-              </span>
-              <span className={s.resumeLabel}>
-                <Play size={12} />
-                Resume
-              </span>
-            </label>
           </div>
         </div>
       </div>

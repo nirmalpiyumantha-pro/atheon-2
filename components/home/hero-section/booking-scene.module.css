@@ -8,8 +8,7 @@
 .player {
   position: relative;
 }
-.srOnly,
-.pauseInput {
+.srOnly {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -282,68 +281,6 @@
 .emailOutcome {
   animation: outcomeIn 0.45s 6.5s both;
 }
-.sceneFooter {
-  position: relative;
-  height: 0;
-}
-.controls {
-  position: absolute;
-  right: 8px;
-  top: -14px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  flex-shrink: 0;
-}
-.controls button,
-.pauseControl {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
-  min-height: 36px;
-  padding: 5px 0;
-  color: #465e7c;
-  font: inherit;
-  font-size: 13px;
-  line-height: 1.5;
-  background: transparent;
-  border: 0;
-  cursor: pointer;
-}
-.controls button:hover,
-.pauseControl:hover {
-  color: #005cde;
-}
-.pauseControl,
-.pauseInput {
-  animation: hidePause 0.01s 7.7s forwards;
-}
-.pauseLabel,
-.resumeLabel {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-.resumeLabel {
-  display: none;
-}
-.player:has(.pauseInput:checked) .canvas *,
-.player:has(.pauseInput:checked) .pauseControl,
-.player:has(.pauseInput:checked) .pauseInput {
-  animation-play-state: paused;
-}
-.player:has(.pauseInput:checked) .pauseLabel {
-  display: none;
-}
-.player:has(.pauseInput:checked) .resumeLabel {
-  display: flex;
-}
-.pauseInput:focus-visible ~ .sceneFooter .pauseControl {
-  outline: 3px solid #0069ff;
-  outline-offset: 3px;
-  border-radius: 3px;
-}
 @keyframes requestIn {
   from {
     opacity: 0;
@@ -391,11 +328,6 @@
     transform: translateY(0);
   }
 }
-@keyframes hidePause {
-  to {
-    visibility: hidden;
-  }
-}
 @keyframes spin {
   to {
     transform: rotate(360deg);
@@ -423,16 +355,11 @@
   .serviceTitle { font-size: 19px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .player .canvas *,
-  .player .pauseControl {
+  .player .canvas * {
     animation: none !important;
   }
   .pendingFirst,
   .pendingSecond {
-    display: none;
-  }
-  .controls,
-  .pauseInput {
     display: none;
   }
   .doneFirst,
@@ -445,5 +372,4 @@
 
 @media (max-width: 767px) {
   .canvas { padding-top: 8px; }
-  .controls button, .pauseControl { min-height: 44px; min-width: 44px; }
 }

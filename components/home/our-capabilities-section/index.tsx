@@ -14,28 +14,24 @@ const examples = [
     title: "Answers your team can trace back to the source.",
     text: "An employee asks a question. Your agent checks approved policies and documents, then brings back a clear answer with references.",
     outcome: "Less searching. A clear next step.",
-    tools: "Slack · Google Drive · Notion",
   },
   {
     label: "Invoice processing",
     title: "Invoices checked. Exceptions brought to your attention.",
     text: "Extract invoice details, check calculations and match the purchase order. Save the draft bill and route discrepancies to finance before payment approval.",
     outcome: "Routine checks handled. Finance stays in control.",
-    tools: "Gmail · QuickBooks · Slack",
   },
   {
     label: "Service scheduling",
     title: "From a customer request to a confirmed visit.",
     text: "Match the job to the right technician, check availability and reserve a time. Update the calendar and send the customer their confirmation.",
     outcome: "A booked visit, with fewer back-and-forth messages.",
-    tools: "Jobber · Google Calendar · Gmail",
   },
   {
     label: "Customer support",
     title: "Resolve the issue, not just the conversation.",
     text: "Verify the customer and check the order, tracking and delivery policy. Offer an approved resolution, then update the order and support ticket.",
     outcome: "An answer followed by the action it needs.",
-    tools: "Shopify · Zendesk · Gmail",
   },
 ]
 
@@ -179,9 +175,6 @@ export function Index() {
                   <h3>{example.title}</h3>
                   <p>{example.text}</p>
                   <p className={s.outcome}>{example.outcome}</p>
-                  <span className={s.tools}>
-                    Example tools: {example.tools}
-                  </span>
                   <EnquiryLink
                     interest={
                       (
@@ -238,7 +231,6 @@ export function Index() {
                 ))}
               </div>
               <div className={s.stageFooter}>
-                <span>Illustrative workflow</span>
                 <a
                   href={capabilitiesData[active].image.src.src}
                   target="_blank"
