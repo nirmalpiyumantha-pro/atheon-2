@@ -31,10 +31,12 @@ export default function PrivacyPage() {
         <h2>Information you choose to share</h2>
         <p>
           The enquiry form asks for your name, email address, area of interest
-          and a short description of your project. It prepares an email draft in
-          your browser. Preparing the draft does not send an enquiry or save it
-          to a form database on this website. The message is sent only when you
-          choose to send it through your email app.
+          and a short description of your project. When you select “Send
+          message” or “Send demo request,” these details are sent through our
+          server and Resend, our email-delivery provider, to
+          contact@atheonworks.com. The website does not store these enquiries in
+          a form database. Your IP address may be used briefly in server memory
+          to limit repeated submissions.
         </p>
         <p>
           When you send us an email, we receive the message and the contact

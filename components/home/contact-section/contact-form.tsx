@@ -1,24 +1,29 @@
 "use client"
 
-import { useState, useEffect, type FormEvent } from "react"
-import { ArrowUpRight, Mail } from "lucide-react"
-import {
-  enquiryOptions,
-  validInterest,
-  type EnquiryInterest,
-} from "@/lib/enquiry-options"
+import { useState, useEffect, useRef, type FormEvent } from "react"
+import { ArrowUpRight, LoaderCircle } from "lucide-react"
+import { enquiryOptions, validInterest, type EnquiryInterest } from "@/lib/enquiry-options"
 
+type Status = "idle" | "sending" | "success" | "error"
 export function ContactForm({ className }: { className?: string }) {
-  const [draft, setDraft] = useState("")
   const [interest, setInterest] = useState<EnquiryInterest>("general")
+  const [status, setStatus] = useState<Status>("idle")
+  const [notice, setNotice] = useState("")
+  const [errors, setErrors] = useState<Record<string, string>>({})
+  const submissionId = useRef<string | null>(null)
+  const sending = useRef(false)
+  const isSubmitting = status === "sending"
+  function resetFeedback() {
+    if (sending.current) return
+    setStatus("idle")
+    setNotice("")
+    setErrors({})
+    submissionId.current = null
+  }
   useEffect(() => {
     function sync() {
-      setInterest(
-        validInterest(
-          new URL(window.location.href).searchParams.get("interest"),
-        ),
-      )
-      setDraft("")
+      setInterest(validInterest(new URL(window.location.href).searchParams.get("interest")))
+      resetFeedback()
     }
     sync()
     window.addEventListener("atheon:enquiry", sync)
@@ -28,125 +33,109 @@ export function ContactForm({ className }: { className?: string }) {
       window.removeEventListener("popstate", sync)
     }
   }, [])
-  const selectedLabel = enquiryOptions.find(
-    (option) => option.value === interest,
-  )!.label
-  function prepareEmail(event: FormEvent<HTMLFormElement>) {
+
+  async function sendRequest(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
-    const data = new FormData(event.currentTarget)
-    const name = String(data.get("name") || "").trim()
-    const email = String(data.get("email") || "").trim()
-    const message = String(data.get("message") || "").trim()
-    const body = `Hi Atheon,\n\nInterested in: ${selectedLabel}\n\n${message}\n\nName: ${name}\nEmail: ${email}`
-    setDraft(
-      `mailto:contact@atheonworks.com?subject=${encodeURIComponent(`${interest === "demo" ? "Demo request" : "Project enquiry"}: ${selectedLabel} — ${name}`)}&body=${encodeURIComponent(body)}`,
-    )
+    if (sending.current || status === "success") return
+    const form = event.currentTarget
+    const data = new FormData(form)
+    sending.current = true
+    setStatus("sending")
+    setErrors({})
+    setNotice("")
+    submissionId.current ||= crypto.randomUUID()
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: String(data.get("name") || ""),
+          email: String(data.get("email") || ""),
+          interest,
+          message: String(data.get("message") || ""),
+          website: String(data.get("website") || ""),
+          submissionId: submissionId.current,
+        }),
+        signal: AbortSignal.timeout(20000),
+      })
+      const result = await response.json().catch(() => null)
+      if (!response.ok || result?.success !== true) {
+        const fieldErrors: Record<string, string> = {}
+        for (const key of ["name", "email", "interest", "message"]) {
+          if (typeof result?.errors?.[key] === "string") fieldErrors[key] = result.errors[key]
+        }
+        setErrors(fieldErrors)
+        setStatus("error")
+        setNotice(typeof result?.error === "string" ? result.error : "Your message could not be sent. Please try again or email contact@atheonworks.com.")
+        const first = Object.keys(fieldErrors)[0]
+        if (first) requestAnimationFrame(() => {
+          const input = form.elements.namedItem(first)
+          if (input instanceof HTMLElement) input.focus()
+        })
+        return
+      }
+      setStatus("success")
+      setNotice("Your message has been sent. We’ll reply to the email address you provided.")
+    } catch {
+      setStatus("error")
+      setNotice("We couldn’t confirm sending. Please try again or email contact@atheonworks.com. Your message is still here.")
+    } finally {
+      sending.current = false
+    }
   }
+  const fieldError = (field: string) => errors[field] && (
+    <p id={`contact-${field}-error`} className="field-error">{errors[field]}</p>
+  )
   return (
-    <form
-      className={`contact-form ${className || ""}`}
-      onSubmit={prepareEmail}
-      onChange={() => setDraft("")}
-    >
-      <div className="enquiry-intro" aria-live="polite">
-        <h3>
-          {interest === "demo"
-            ? "Let’s arrange your demo"
-            : "Tell us about your project"}
-        </h3>
-        <p>
-          {interest === "demo"
-            ? "Tell us what you’d like to see. We’ll arrange a time by email."
-            : "Choose what you’re interested in, then tell us a little about your business."}
-        </p>
+    <form className={`contact-form ${className || ""}`} onSubmit={sendRequest} onChange={resetFeedback} aria-busy={isSubmitting}>
+      <div className="enquiry-intro">
+        <h3>{interest === "demo" ? "Let’s arrange your demo" : "Tell us about your project"}</h3>
+        <p>{interest === "demo" ? "Tell us what you’d like to see. We’ll arrange a time by email." : "Choose what you’re interested in, then tell us a little about your business."}</p>
       </div>
       <div className="form-field">
         <label htmlFor="contact-interest">I’m interested in</label>
-        <select
-          id="contact-interest"
-          name="interest"
-          value={interest}
+        <select id="contact-interest" name="interest" value={interest} disabled={isSubmitting}
+          aria-invalid={!!errors.interest} aria-describedby={errors.interest ? "contact-interest-error" : undefined}
           onChange={(event) => {
             setInterest(validInterest(event.target.value))
-            setDraft("")
             const url = new URL(window.location.href)
             url.searchParams.set("interest", event.target.value)
             window.history.replaceState(null, "", url)
-          }}
-        >
-          {enquiryOptions.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
+          }}>
+          {enquiryOptions.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
         </select>
-        <p className="selection-help">
-          You can change this selection at any time.
-        </p>
+        {fieldError("interest")}
+        <p className="selection-help">You can change this selection at any time.</p>
       </div>
       <div className="form-field">
         <label htmlFor="contact-name">Your name</label>
-        <input
-          id="contact-name"
-          name="name"
-          type="text"
-          autoComplete="name"
-          maxLength={255}
-          placeholder="Your full name"
-          required
-        />
+        <input id="contact-name" name="name" type="text" autoComplete="name" maxLength={255} placeholder="Your full name" required disabled={isSubmitting}
+          aria-invalid={!!errors.name} aria-describedby={errors.name ? "contact-name-error" : undefined} />
+        {fieldError("name")}
       </div>
       <div className="form-field">
         <label htmlFor="contact-email">Email address</label>
-        <input
-          id="contact-email"
-          name="email"
-          type="email"
-          autoComplete="email"
-          spellCheck={false}
-          placeholder="you@company.com"
-          required
-        />
+        <input id="contact-email" name="email" type="email" autoComplete="email" spellCheck={false} maxLength={254} placeholder="you@company.com" required disabled={isSubmitting}
+          aria-invalid={!!errors.email} aria-describedby={errors.email ? "contact-email-error" : undefined} />
+        {fieldError("email")}
       </div>
       <div className="form-field">
         <label htmlFor="contact-message">What would you like to improve?</label>
-        <textarea
-          id="contact-message"
-          name="message"
-          rows={4}
-          maxLength={1024}
-          placeholder="Describe the task, the tools you use and what you’d like to change…"
-          required
-        />
+        <textarea id="contact-message" name="message" rows={4} maxLength={1024} placeholder="Describe the task, the tools you use and what you’d like to change…" required disabled={isSubmitting}
+          aria-invalid={!!errors.message} aria-describedby={errors.message ? "contact-message-error" : undefined} />
+        {fieldError("message")}
       </div>
-      <button type="submit" className="button form-submit">
-        {interest === "demo" ? "Prepare demo request" : "Prepare enquiry email"}{" "}
-        <ArrowUpRight size={17} aria-hidden="true" />
+      <div className="contact-honeypot" aria-hidden="true">
+        <label htmlFor="contact-website">Leave this field empty</label>
+        <input id="contact-website" name="website" type="text" autoComplete="off" tabIndex={-1} />
+      </div>
+      <button type="submit" className="button form-submit" disabled={isSubmitting || status === "success"}>
+        {isSubmitting ? "Sending…" : status === "success" ? "Message sent" : interest === "demo" ? "Send demo request" : "Send message"}
+        {isSubmitting ? <LoaderCircle size={17} className="spinner" aria-hidden="true" /> : <ArrowUpRight size={17} aria-hidden="true" />}
       </button>
-      <p className="preview-note">
-        Review and send your enquiry through your email app.{" "}
-        <a href="/privacy" className="privacy-link">
-          Privacy policy
-        </a>
-      </p>
-      <div aria-live="polite">
-        {draft && (
-          <div className="enquiry-draft">
-            <p>Your draft is ready. Nothing has been sent yet.</p>
-            <a href={draft} className="button button-outline">
-              <Mail size={17} aria-hidden="true" />
-              Open email draft
-            </a>
-            <p>
-              No email app set up? Email{" "}
-              <a href="mailto:contact@atheonworks.com">
-                contact@atheonworks.com
-              </a>{" "}
-              directly.
-            </p>
-          </div>
-        )}
-      </div>
+      {status === "error" && <p className="field-error" role="alert">{notice}</p>}
+      <div role="status" aria-live="polite">{status === "success" && <p className="form-success">{notice}</p>}</div>
+      <p className="preview-note">Your details are sent to Atheon so we can respond. <a href="/privacy" className="privacy-link">Privacy policy</a></p>
     </form>
   )
 }
