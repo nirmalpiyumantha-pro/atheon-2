@@ -4,13 +4,13 @@ The form posts to `/api/contact` on the website's own server. Every accepted enq
 
 ## Required production configuration
 
-1. Verify a sending domain you control in Resend. For this website, use `atheonworks.com` and add the DNS records shown in the Resend dashboard.
+1. Verify a sending domain you control in Resend. For the current deployment, the verified sending domain is `contact.atheonworks.com`; use that subdomain and add the DNS records shown in the Resend dashboard.
 2. Create a Resend API key with permission to send from that domain.
 3. Configure these **server-side** environment variables in your hosting provider:
 
 ```dotenv
 RESEND_API_KEY=your-sending-key
-FROM_EMAIL=Atheon website <contact@atheonworks.com>
+FROM_EMAIL=Atheon website <website@contact.atheonworks.com>
 PUBLIC_BASE_URL=https://your-website-domain.example
 ```
 
