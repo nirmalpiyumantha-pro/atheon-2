@@ -1,11 +1,7 @@
 import {
   ClipboardCheck,
-  GitBranch,
   MessageSquare,
-  Plug,
-  ShieldCheck,
   Workflow,
-  Wrench,
 } from "lucide-react"
 import Container from "@/components/container"
 import Faq from "./faqs-section/faq"
@@ -29,93 +25,7 @@ function Heading({
     </div>
   )
 }
-const reasons = [
-  {
-    icon: GitBranch,
-    title: "Your process comes first",
-    text: "We start with how work happens today, then design the automation around your team, rules and desired outcome.",
-  },
-  {
-    icon: Plug,
-    title: "Work with the tools you use",
-    text: "We assess your existing platforms and connect what is needed, with integration requirements agreed before development.",
-  },
-  {
-    icon: ShieldCheck,
-    title: "Keep people in control",
-    text: "Set the boundaries for what runs automatically, what needs approval and when a person should take over.",
-  },
-  {
-    icon: Wrench,
-    title: "Plan beyond the launch",
-    text: "Choose managed hosting and maintenance, or deployment on your own infrastructure with an agreed support arrangement.",
-  },
-]
-export function WhyAtheon() {
-  return (
-    <div className={s.tint}>
-      <Container id="why-atheon">
-        <div className={s.whyLayout}>
-          <Heading
-            tag="Why Atheon"
-            title="Built to fit your business. Supported as it grows."
-            description="We focus on how automation fits your people, systems and day-to-day operations, from the first workflow discussion to launch and support."
-          />
-          <div className={s.reasons} data-reveal data-reveal-delay="1">
-            {reasons.map(({ icon: Icon, title, text }) => (
-              <article key={title}>
-                <Icon size={25} strokeWidth={1.6} aria-hidden="true" />
-                <h3>{title}</h3>
-                <p>{text}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </Container>
-    </div>
-  )
-}
 export { CustomAgents } from "./custom-agents"
-const steps = [
-  {
-    title: "Understand the work",
-    text: "Walk us through the process, the tools involved and what you want to improve.",
-  },
-  {
-    title: "Agree on the plan",
-    text: "Define the workflow, integrations, approval rules, costs and delivery scope.",
-  },
-  {
-    title: "Build and test",
-    text: "Connect the systems and test realistic scenarios together before going live.",
-  },
-  {
-    title: "Launch and support",
-    text: "Deploy the automation, show your team how it works and begin the agreed support.",
-  },
-]
-export function WorkingTogether() {
-  return (
-    <Container id="how-it-works">
-      <Heading
-        tag="Working together"
-        title="A clear path from idea to everyday use."
-        description="You bring the process you want to improve. We turn it into a defined project, with a clear scope and a practical plan for launch."
-      />
-      <ol className={s.steps}>
-        {steps.map((step, i) => (
-          <li key={step.title} data-reveal data-reveal-delay={i}>
-            <span className={s.stepNumber}>
-              {String(i + 1).padStart(2, "0")}
-            </span>
-            <h3>{step.title}</h3>
-            <p>{step.text}</p>
-          </li>
-        ))}
-      </ol>
-    </Container>
-  )
-}
 export function PracticalFaqs() {
   return (
     <div className={s.tint}>

@@ -10,7 +10,7 @@ export const faqsData: Faq[] = [
     id: "start",
     title: "I’m not sure what to automate. Can we start there?",
     description:
-      "Yes. Tell us which tasks take time, where information gets copied or where work gets held up. We can explore the process with you and identify a practical starting point before defining a project.",
+      "Yes. We start with your process, existing tools and the work you want to improve. Together we agree the scope, integrations, approval rules, costs and timeline, then build and test realistic scenarios with your team before launch.",
   },
   {
     id: "tools",

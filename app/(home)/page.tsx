@@ -4,8 +4,6 @@ import { Index as PerformanceFiguresSection } from "@/components/home/performanc
 import {
   CustomAgents,
   Plans,
-  WhyAtheon,
-  WorkingTogether,
   PracticalFaqs,
   ProjectEnquiry,
 } from "@/components/home/story-sections"
@@ -22,9 +20,7 @@ export default function Home() {
       <IntegrationsRibbon />
       <OurCapabilitiesSection />
       <CustomAgents />
-      <WhyAtheon />
       <SecuritySection />
-      <WorkingTogether />
       <Plans />
       <PracticalFaqs />
       <ProjectEnquiry />
