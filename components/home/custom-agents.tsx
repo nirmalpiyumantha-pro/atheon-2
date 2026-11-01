@@ -61,7 +61,7 @@ export function CustomAgents() {
   return (
     <div className={s.background}>
       <Container id="custom-agents">
-        <div className={s.intro}>
+        <div className={s.intro} data-reveal>
           <div className={s.copy}>
             <span className="section-tag">The Atheon AI agent</span>
             <h2>
@@ -87,7 +87,7 @@ export function CustomAgents() {
             />
           </figure>
         </div>
-        <div className={s.highlights}>
+        <div className={s.highlights} data-reveal>
           {highlights.map(({ icon: Icon, title, text, example }) => (
             <article key={title}>
               <span className={s.icon}>
@@ -99,7 +99,7 @@ export function CustomAgents() {
             </article>
           ))}
         </div>
-        <div className={s.more}>
+        <div className={s.more} data-reveal>
           <h3>More than a helpful reply.</h3>
           <div className={s.supporting}>
             {supporting.map(({ icon: Icon, title, text }) => (

@@ -21,31 +21,37 @@
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 28px;
-  margin-top: 38px;
+  margin-top: 40px;
 }
 .plan {
   display: flex;
   flex-direction: column;
   min-width: 0;
   padding: 34px;
-  border: 1px solid #d1def1;
+  border: 1px solid #bfd6ff;
   border-radius: 20px;
   background: #fff;
+  box-shadow: 0 8px 24px #1e477a08;
+  transition: transform 200ms ease, border-color 200ms ease, box-shadow 200ms ease;
+}
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .plan:hover {
+    transform: translateY(-2px);
+    border-color: #9ec1fc;
+    box-shadow: 0 12px 28px #1e477a10;
+  }
 }
 .label {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-  color: #0057d6;
-  font-size: 13px;
-  font-weight: 600;
-  margin-bottom: 22px;
+  color: var(--brand);
+  font-size: clamp(25px, 2.1vw, 29px);
+  font-weight: 650;
+  line-height: 1.25;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
 }
-.label svg {
-  flex-shrink: 0;
-}
-.plan h3 {
-  font-size: 28px;
+.subtitle {
+  margin-top: 16px;
+  font-size: 22px;
   font-weight: 600;
   line-height: 1.25;
 }
@@ -109,8 +115,12 @@
   .plan {
     padding: 26px;
   }
-  .plan h3 {
+  .label {
     font-size: 25px;
+    min-height: 2.5em;
+  }
+  .subtitle {
+    font-size: 20px;
   }
   .description {
     min-height: 100px;
@@ -126,6 +136,9 @@
     margin-top: 28px;
   }
   .description {
+    min-height: 0;
+  }
+  .label {
     min-height: 0;
   }
   .heading h2 {
@@ -152,8 +165,5 @@
   .plan dl > div {
     grid-template-columns: 1fr;
     gap: 4px;
-  }
-  .label {
-    font-size: 12px;
   }
 }

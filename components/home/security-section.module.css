@@ -19,7 +19,7 @@
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 32px;
-  margin-top: 32px;
+  margin-top: 40px;
 }
 .details article {
   border-top: 1px solid #d1def1;
@@ -52,6 +52,7 @@
   text-underline-offset: 4px;
 }
 @media (max-width: 767px) {
+  .details { margin-top: 32px; }
   .details {
     grid-template-columns: 1fr;
     gap: 24px;

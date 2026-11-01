@@ -23,7 +23,7 @@ const details = [
 export function SecuritySection() {
   return (
     <Container id="security" className={s.section}>
-      <header className={s.heading}>
+      <header className={s.heading} data-reveal>
         <span className="section-tag">Security & data handling</span>
         <h2>Clear boundaries for your data.</h2>
         <p>
@@ -31,7 +31,7 @@ export function SecuritySection() {
           hosting and handling requirements with you before launch.
         </p>
       </header>
-      <div className={s.details}>
+      <div className={s.details} data-reveal>
         {details.map(({ icon: Icon, title, text }) => (
           <article key={title}>
             <Icon size={25} strokeWidth={1.6} aria-hidden="true" />

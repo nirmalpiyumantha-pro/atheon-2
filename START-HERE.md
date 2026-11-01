@@ -1,13 +1,13 @@
 # Atheon website — start here
 
-This is the latest published source, including the updated hero, green Booked label,
-section order, policy pages and animated statistics.
-Source commit: a7d6a87ec7aa8f445e80f058dec97619fc2a2495
+This copy matches the latest published Atheon site, including the integrations ribbon,
+updated plans, compact hero confirmation, consistent page alignment and subtle animations.
+Hosted-site source commit: c0e29ba0af320777245596703a77852ed64681e2
 
 ## Open and run on Windows / VS Code
 
-1. Extract this ZIP.
-2. Open the extracted `atheon-website` folder in VS Code.
+1. Clone this repository, or download and extract its ZIP from GitHub.
+2. Open the repository folder in VS Code.
 3. Install Node.js if needed. This Next.js version requires Node.js >=20.9.0.
    npm is included with Node.js.
 4. In VS Code, choose Terminal > New Terminal, then run:
@@ -29,11 +29,14 @@ Stop the server with Ctrl+C.
 - `components/home/our-capabilities-section/` — capability layout and scroll behavior.
 - `components/home/custom-agents.tsx` — AI agent features.
 - `components/home/plans.tsx` — plans and deployment content.
+- `components/home/integrations-ribbon.tsx` — travelling application ribbon.
+- `public/integration-logos/` — local application logos.
+- `components/home/scroll-motion.tsx` — one-time scroll reveals.
 - `components/home/performance-figures/index.tsx` — count-up animation.
 - `lib/performance-figures-data.ts` — statistics and labels.
 - `lib/faqs-data.ts` — FAQs.
 - `lib/nav-items-data.ts` — navigation.
-- `app/globals.css` — shared styling and brand colors.
+- `app/globals.css` — shared styling, brand colors and animation rules.
 - `assets/images/` and `public/` — images, fonts and other assets.
 - `app/privacy/page.tsx` and `app/terms/page.tsx` — policy pages.
 - `components/footer.tsx` — footer.
@@ -58,7 +61,7 @@ it does not submit to a backend form database. No secret is needed for that flow
 Before deploying on your own domain, update the origin/canonical URLs in
 `app/layout.tsx`, `app/robots.ts` and `app/sitemap.ts` as appropriate.
 
-All tracked website source and assets are included. Dependency folders, generated
+Website source and assets are included. Dependency folders, generated
 build output, Git history, and the ChatGPT hosting binding are excluded.
 Run `npm ci` to restore dependencies; no changes to the live website are made by
-extracting or editing this copy.
+cloning or editing this copy.

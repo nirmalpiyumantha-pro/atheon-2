@@ -11,11 +11,15 @@ import {
 } from "@/components/home/story-sections"
 import Footer from "@/components/footer"
 import { SecuritySection } from "@/components/home/security-section"
+import { IntegrationsRibbon } from "@/components/home/integrations-ribbon"
+import { ScrollMotion } from "@/components/home/scroll-motion"
 export default function Home() {
   return (
     <main id="main-content">
+      <ScrollMotion />
       <HeroSection />
       <PerformanceFiguresSection />
+      <IntegrationsRibbon />
       <OurCapabilitiesSection />
       <CustomAgents />
       <WhyAtheon />

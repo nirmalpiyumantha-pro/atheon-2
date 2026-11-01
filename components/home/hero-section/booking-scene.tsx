@@ -41,16 +41,14 @@ function BubbleSurface({ tail = false, right = false }: { tail?: boolean; right?
   )
 }
 
-function AtheonHeader({ booked = false }: { booked?: boolean }) {
+function AtheonHeader() {
   return (
     <div className={s.workHeading}>
       <span className={s.brandIdentity}>
-        <Image src={logo} alt="" width={19} height={21} />
+        <Image src={logo} alt="" width={25} height={28} />
         <span>Atheon</span>
       </span>
-      <span className={`${s.workLabel} ${booked ? s.bookedLabel : ""}`}>
-        {booked ? "Booked" : "Booking assistant"}
-      </span>
+      <span className={s.workLabel}>Booking assistant</span>
     </div>
   )
 }
@@ -125,8 +123,10 @@ export function BookingScene() {
           <div className={s.confirmation}>
             <BubbleSurface />
             <div className={s.bubbleBody}>
-              <AtheonHeader booked />
-              <p className={s.serviceTitle}>Your AC service is booked.</p>
+              <div className={s.confirmationHeading}>
+                <p className={s.serviceTitle}>Your AC service is booked.</p>
+                <span className={`${s.workLabel} ${s.bookedLabel}`}>Booked</span>
+              </div>
               <div className={s.appointment}>
                 <strong>Tuesday at 2:00 PM</strong>
               </div>
@@ -147,7 +147,6 @@ export function BookingScene() {
           </div>
         </div>
         <div className={s.sceneFooter}>
-          <span>Illustrative booking workflow</span>
           <div className={s.controls}>
             <label htmlFor={pauseId} className={s.pauseControl}>
               <span className={s.pauseLabel}>

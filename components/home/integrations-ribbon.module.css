@@ -1,0 +1,105 @@
+.section {
+  padding: 32px 0 44px;
+  background: var(--surface-base);
+  overflow: hidden;
+}
+.header {
+  position: relative;
+  max-width: var(--site-width);
+  margin: 0 auto 24px;
+  padding: 0 var(--site-gutter);
+}
+.heading {
+  margin: 0;
+  color: var(--ink);
+  font-size: clamp(20px, 2vw, 26px);
+  line-height: 1.35;
+  font-weight: 600;
+  letter-spacing: -.03em;
+  text-align: center;
+  text-wrap: balance;
+  padding-inline: 44px;
+}
+.toggle {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  clip-path: inset(50%);
+  overflow: hidden;
+}
+.control {
+  position: absolute;
+  right: var(--site-gutter);
+  top: 50%;
+  transform: translateY(-50%);
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid #d6e2f2;
+  border-radius: 50%;
+  background: #fff;
+  color: #405774;
+  cursor: pointer;
+}
+.toggle:focus-visible + .control {
+  outline: 3px solid #0069ff;
+  outline-offset: 3px;
+}
+.pause { display: flex; }
+.play { display: none; }
+.toggle:checked + .control .pause { display: none; }
+.toggle:checked + .control .play { display: flex; }
+.viewport {
+  overflow: hidden;
+  padding-block: 2px;
+  mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
+}
+.track {
+  display: flex;
+  width: max-content;
+  animation: travel 85s linear infinite;
+}
+.list {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  gap: 14px;
+  list-style: none;
+  margin: 0;
+  padding: 0 14px 0 0;
+}
+.chip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  gap: 12px;
+  height: 62px;
+  padding: 0 22px;
+  background: #fff;
+  border: 1px solid #d9e4f4;
+  border-radius: 12px;
+  color: #193250;
+  font-size: 15px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.chip img { width: 28px; height: 28px; object-fit: contain; }
+.section:has(.toggle:checked) .track,
+.viewport:hover .track { animation-play-state: paused; }
+@keyframes travel { to { transform: translateX(-50%); } }
+@media (max-width: 767px) {
+  .section { padding: 26px 0 32px; }
+  .header { margin-bottom: 20px; }
+  .heading { font-size: 20px; }
+  .control { width: 36px; height: 36px; }
+  .chip { height: 56px; padding-inline: 18px; font-size: 14px; gap: 10px; }
+  .chip img { width: 26px; height: 26px; }
+  .viewport { mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .track { animation: none; }
+  .list[aria-hidden="true"], .control, .toggle { display: none; }
+  .viewport { overflow-x: auto; mask-image: none; padding-inline: var(--site-gutter); }
+}

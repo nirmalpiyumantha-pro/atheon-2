@@ -2,7 +2,7 @@
   background: var(--surface-base);
 }
 .section {
-  max-width: 1440px;
+  max-width: var(--site-width);
 }
 .heading {
   max-width: 700px;
@@ -103,10 +103,12 @@
   height: auto;
   aspect-ratio: 1600/826;
   object-fit: contain;
+  transition: opacity 240ms ease, visibility 0s 240ms;
 }
 .stageImage[data-active="true"] {
   opacity: 1;
   visibility: visible;
+  transition-delay: 0s;
 }
 .stageFooter {
   display: flex;
@@ -141,6 +143,7 @@
   height: 3px;
   background: #cad8ed;
   border-radius: 3px;
+  transition: background-color 200ms ease;
 }
 .progress a[aria-current] span {
   background: #0069ff;

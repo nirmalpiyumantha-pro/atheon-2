@@ -153,8 +153,8 @@ export function Index() {
   return (
     <div className={s.background}>
       <Container id="our-capabilities" className={s.section}>
-        <header className={s.heading}>
-          <span className="section-tag">Our capabilities</span>
+        <header className={s.heading} data-reveal>
+          <span className="section-tag">From request to result</span>
           <h2>See what happens after the first message.</h2>
           <p>
             Four examples of how we connect your information, tools and

@@ -1,11 +1,10 @@
-import { Cloud, Server, ArrowUpRight } from "lucide-react"
+import { ArrowUpRight } from "lucide-react"
 import Container from "@/components/container"
 import { EnquiryLink } from "@/components/enquiry-link"
 import s from "./plans.module.css"
 const plans = [
   {
     key: "managed",
-    icon: Cloud,
     label: "Managed subscription",
     title: "We run it for you.",
     description:
@@ -20,7 +19,6 @@ const plans = [
   },
   {
     key: "infrastructure",
-    icon: Server,
     label: "Client-owned infrastructure",
     title: "Run it in your environment.",
     description:
@@ -37,12 +35,12 @@ const plans = [
 export function Plans() {
   return (
     <Container id="delivery-options">
-      <header className={s.heading}>
+      <header className={s.heading} data-reveal>
         <span className="section-tag">Plans & deployment</span>
         <h2>
           Your automation.
           <br />
-          Two ways to run it.
+          <span className="heading-accent">Two ways to run it.</span>
         </h2>
         <p>
           Choose who manages the environment. We’ll shape the build, support and
@@ -51,13 +49,10 @@ export function Plans() {
       </header>
       <div className={s.grid}>
         {plans.map(
-          ({ key, icon: Icon, label, title, description, rows, cta }) => (
-            <article className={s.plan} key={key}>
-              <div className={s.label}>
-                <Icon size={23} strokeWidth={1.6} aria-hidden="true" />
-                {label}
-              </div>
-              <h3>{title}</h3>
+          ({ key, label, title, description, rows, cta }, index) => (
+            <article className={s.plan} key={key} data-reveal data-reveal-delay={index}>
+              <h3 className={s.label}>{label}</h3>
+              <p className={s.subtitle}>{title}</p>
               <p className={s.description}>{description}</p>
               <dl>
                 {rows.map(([label, value]) => (

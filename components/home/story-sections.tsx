@@ -22,7 +22,7 @@ function Heading({
   description: string
 }) {
   return (
-    <div className={s.intro}>
+    <div className={s.intro} data-reveal>
       <span className="section-tag">{tag}</span>
       <h2>{title}</h2>
       <p>{description}</p>
@@ -61,7 +61,7 @@ export function WhyAtheon() {
             title="Built to fit your business. Supported as it grows."
             description="We focus on how automation fits your people, systems and day-to-day operations, from the first workflow discussion to launch and support."
           />
-          <div className={s.reasons}>
+          <div className={s.reasons} data-reveal data-reveal-delay="1">
             {reasons.map(({ icon: Icon, title, text }) => (
               <article key={title}>
                 <Icon size={25} strokeWidth={1.6} aria-hidden="true" />
@@ -104,7 +104,7 @@ export function WorkingTogether() {
       />
       <ol className={s.steps}>
         {steps.map((step, i) => (
-          <li key={step.title}>
+          <li key={step.title} data-reveal data-reveal-delay={i}>
             <span className={s.stepNumber}>
               {String(i + 1).padStart(2, "0")}
             </span>
@@ -126,7 +126,7 @@ export function PracticalFaqs() {
             title="Before we get started."
             description="A few practical answers about choosing, building and running your automation."
           />
-          <div className={s.faqList}>
+          <div className={s.faqList} data-reveal data-reveal-delay="1">
             {faqsData.map((faq) => (
               <Faq
                 key={faq.id}
@@ -170,7 +170,7 @@ export function ProjectEnquiry() {
             <a href="mailto:contact@atheonworks.com">contact@atheonworks.com</a>
           </p>
         </div>
-        <div className={s.enquiryForm}>
+        <div className={s.enquiryForm} data-reveal data-reveal-delay="1">
           <ContactForm />
         </div>
       </div>
