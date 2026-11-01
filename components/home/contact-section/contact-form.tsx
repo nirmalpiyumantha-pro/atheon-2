@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect, useRef, type FormEvent } from "react"
-import { ArrowUpRight, LoaderCircle } from "lucide-react"
+import { ArrowUpRight, Check, LoaderCircle } from "lucide-react"
 import { enquiryOptions, validInterest, type EnquiryInterest } from "@/lib/enquiry-options"
 
 type Status = "idle" | "sending" | "success" | "error"
@@ -12,6 +12,7 @@ export function ContactForm({ className }: { className?: string }) {
   const [errors, setErrors] = useState<Record<string, string>>({})
   const submissionId = useRef<string | null>(null)
   const sending = useRef(false)
+  const formRef = useRef<HTMLFormElement>(null)
   const isSubmitting = status === "sending"
   function resetFeedback() {
     if (sending.current) return
@@ -19,6 +20,14 @@ export function ContactForm({ className }: { className?: string }) {
     setNotice("")
     setErrors({})
     submissionId.current = null
+  }
+  function startAnotherMessage() {
+    const message = formRef.current?.elements.namedItem("message")
+    if (message instanceof HTMLTextAreaElement) {
+      message.value = ""
+      resetFeedback()
+      message.focus()
+    }
   }
   useEffect(() => {
     function sync() {
@@ -87,7 +96,7 @@ export function ContactForm({ className }: { className?: string }) {
     <p id={`contact-${field}-error`} className="field-error">{errors[field]}</p>
   )
   return (
-    <form className={`contact-form ${className || ""}`} onSubmit={sendRequest} onChange={resetFeedback} aria-busy={isSubmitting}>
+    <form ref={formRef} className={`contact-form ${className || ""}`} onSubmit={sendRequest} onChange={resetFeedback} aria-busy={isSubmitting}>
       <div className="enquiry-intro">
         <h3>{interest === "demo" ? "Let’s arrange your demo" : "Tell us about your project"}</h3>
         <p>{interest === "demo" ? "Tell us what you’d like to see. We’ll arrange a time by email." : "Choose what you’re interested in, then tell us a little about your business."}</p>
@@ -129,12 +138,21 @@ export function ContactForm({ className }: { className?: string }) {
         <label htmlFor="contact-website">Leave this field empty</label>
         <input id="contact-website" name="website" type="text" autoComplete="off" tabIndex={-1} />
       </div>
-      <button type="submit" className="button form-submit" disabled={isSubmitting || status === "success"}>
-        {isSubmitting ? "Sending…" : status === "success" ? "Message sent" : interest === "demo" ? "Send demo request" : "Send message"}
+      {status !== "success" && <button type="submit" className="button form-submit" disabled={isSubmitting}>
+        {isSubmitting ? "Sending…" : interest === "demo" ? "Send demo request" : "Send message"}
         {isSubmitting ? <LoaderCircle size={17} className="spinner" aria-hidden="true" /> : <ArrowUpRight size={17} aria-hidden="true" />}
-      </button>
+      </button>}
       {status === "error" && <p className="field-error" role="alert">{notice}</p>}
-      <div role="status" aria-live="polite">{status === "success" && <p className="form-success">{notice}</p>}</div>
+      <div role="status" aria-live="polite" aria-atomic="true">{status === "success" && (
+        <div className="form-success">
+          <span className="form-success-icon" aria-hidden="true"><Check size={21} strokeWidth={2.5} /></span>
+          <div>
+            <p className="form-success-title">Message sent successfully</p>
+            <p className="form-success-description">Thanks for reaching out. We’ll reply to your email soon.</p>
+          </div>
+        </div>
+      )}</div>
+      {status === "success" && <button type="button" className="contact-send-another" onClick={startAnotherMessage}>Send another message</button>}
       <p className="preview-note">Your details are sent to Atheon so we can respond. <a href="/privacy" className="privacy-link">Privacy policy</a></p>
     </form>
   )

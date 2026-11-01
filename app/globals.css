@@ -631,10 +631,52 @@ video:focus-visible {
   text-decoration: underline;
 }
 .form-success {
-  color: #256141;
-  font-size: 13px;
-  line-height: 1.8;
-  margin-top: 15px;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 18px;
+  border: 1px solid #a7e2bd;
+  border-radius: 12px;
+  background: #ecfdf3;
+  color: #166534;
+}
+.form-success > div {
+  min-width: 0;
+}
+.form-success-icon {
+  display: grid;
+  place-items: center;
+  flex: 0 0 32px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #15803d;
+  color: #fff;
+}
+.form-success-title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 650;
+  line-height: 1.5;
+}
+.form-success-description {
+  margin: 4px 0 0;
+  font-size: 14px;
+  line-height: 1.6;
+}
+.contact-send-another {
+  display: inline-block;
+  margin-top: 16px;
+  padding: 4px 0;
+  border: 0;
+  background: transparent;
+  color: #0056d6;
+  font: inherit;
+  font-size: 14px;
+  text-align: left;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
 }
 .spinner {
   animation: spin 1s linear infinite;
