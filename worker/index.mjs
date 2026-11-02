@@ -85,7 +85,7 @@ export async function handleContact(request, env = {}, send = fetch) {
       headers: { "Authorization": `Bearer ${key}`, "Content-Type": "application/json",
         "Idempotency-Key": `atheon-enquiry/${input.submissionId}` },
       body: JSON.stringify({ from, to: [recipient], reply_to: email,
-        subject: `${interest === "demo" ? "Demo request" : "Project enquiry"}: ${label} — ${name}`, text }),
+        subject: `${interest === "demo" ? "Demo request" : "Project enquiry"}: ${label} | ${name}`, text }),
       signal: AbortSignal.timeout(12000),
     });
     const result = await response.json().catch(() => null);

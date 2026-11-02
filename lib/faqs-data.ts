@@ -1,34 +1,34 @@
 export type Faq = { id: string; title: string; description: string }
 export const faqsData: Faq[] = [
   {
+    id: "what-is-atheon",
+    title: "What is Atheon?",
+    description:
+      "Atheon designs, builds and maintains custom AI agents and business automations. We connect your customer conversations, business information and existing tools so everyday tasks can move through a clear process.",
+  },
+  {
+    id: "why-atheon",
+    title: "Why choose Atheon?",
+    description:
+      "We build around your business process and the tools you already use. You get an agreed scope, clear running costs and a system tested with your team before launch. Choose an Atheon-managed subscription or deployment on your own infrastructure, with support responsibilities defined from the start.",
+  },
+  {
+    id: "agents-and-automation",
+    title: "What’s the difference between AI agents and automation?",
+    description:
+      "Automation follows defined rules and steps, such as sending a reminder when a booking is confirmed. An AI agent can interpret a message, use relevant information and choose the next step within the rules you set. They can work together: the agent understands the request, and connected automations carry out the actions.",
+  },
+  {
     id: "data-handling",
     title: "How will our data be handled?",
     description:
       "Before launch, we agree which data the workflow uses, who can access it, where it is processed and which external providers are involved. Access controls, approval steps, retention, deletion and support responsibilities are defined for your setup. Deployment on your own infrastructure can still involve third-party AI or integration services; it does not automatically mean all data stays on your server. Our privacy policy explains how this website and business enquiries are handled.",
   },
   {
-    id: "start",
-    title: "I’m not sure what to automate. Can we start there?",
-    description:
-      "Yes. We start with your process, existing tools and the work you want to improve. Together we agree the scope, integrations, approval rules, costs and timeline, then build and test realistic scenarios with your team before launch.",
-  },
-  {
     id: "tools",
     title: "Can you work with our existing software?",
     description:
       "We assess the tools involved and how they can connect. Integration depends on the access, APIs and capabilities each platform provides. Any limitations and required subscriptions are discussed before the build.",
-  },
-  {
-    id: "agents",
-    title: "Do we need an AI agent for every automation?",
-    description:
-      "No. An AI agent is useful for work that needs to interpret a request or use business knowledge. Many processes can be handled by a workflow or integration without a conversational agent. We recommend a setup based on the task.",
-  },
-  {
-    id: "control",
-    title: "Can our team approve important actions?",
-    description:
-      "Yes. Approval steps and human handoffs can be included in the agreed workflow. We define which actions can run automatically and which should be reviewed by your team.",
   },
   {
     id: "time",

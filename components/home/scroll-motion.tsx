@@ -2,8 +2,8 @@
 
 import { useEffect } from "react"
 
-// Content stays visible without JavaScript. Only groups below the first
-// viewport are prepared for a single reveal; sticky workflow panels never move.
+// Reveal each item as it enters the viewport, including on narrow screens.
+// Unmarked sticky workflow panels retain their exact scroll geometry.
 export function ScrollMotion() {
   useEffect(() => {
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)")
@@ -22,18 +22,18 @@ export function ScrollMotion() {
           if (entry.isIntersecting) show(entry.target as HTMLElement)
         }
       },
-      { threshold: 0.01, rootMargin: "0px 0px 72px 0px" },
+      { threshold: 0, rootMargin: "0px 0px -48px 0px" },
     )
 
-    // Batch measurements before writing attributes to avoid layout thrashing.
-    const positions = elements.map((element) => ({
-      element,
-      belowFold: element.getBoundingClientRect().top > window.innerHeight + 72,
-    }))
-    for (const { element, belowFold } of positions) {
-      if (!belowFold) continue
-      element.dataset.revealState = "pending"
-      observer.observe(element)
+    const positions = elements.map((element) => ({ element, rect: element.getBoundingClientRect() }))
+    for (const { element, rect } of positions) {
+      if (rect.bottom <= 0) continue
+      if (rect.top < window.innerHeight - 48) {
+        show(element)
+      } else {
+        element.dataset.revealState = "pending"
+        observer.observe(element)
+      }
     }
 
     // Keyboard navigation should never land on visually hidden content.

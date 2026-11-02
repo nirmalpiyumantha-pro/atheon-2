@@ -49,7 +49,7 @@ export const capabilitiesData: Capability[] = [
     id: "x91mz4qw",
     title: "Support That Actually Resolves Issues",
     description:
-      "AI verifies the customer, checks orders, tracking, policies and stock, then presents the right resolution and completes the follow-up across support systems — turning a conversation into a finished outcome.",
+      "AI verifies the customer, checks orders, tracking, policies and stock, then presents the right resolution and completes the follow-up across support systems, turning a conversation into a finished outcome.",
     image: {
       src: supportThatCanActuallyResolveIssues,
       alt: "Support That Actually Resolves Issues",

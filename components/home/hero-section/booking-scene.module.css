@@ -61,7 +61,7 @@
 }
 .request {
   width: 84%;
-  animation: requestIn .65s cubic-bezier(.2,.7,.2,1) both;
+  animation: requestIn .75s cubic-bezier(.16,1,.3,1) both;
 }
 .working,
 .confirmation {
@@ -69,7 +69,7 @@
   align-self: flex-end;
 }
 .working {
-  animation: messageIn .7s .95s cubic-bezier(.2,.7,.2,1) both;
+  animation: messageIn .8s .7s cubic-bezier(.16,1,.3,1) both;
 }
 .confirmation {
   --face: #0069ff;
@@ -77,7 +77,7 @@
   --border: #0061eb;
   --depth: 1px;
   color: #fff;
-  animation: messageIn .85s 4.9s cubic-bezier(.2,.7,.2,1) both;
+  animation: messageIn .85s 3.6s cubic-bezier(.16,1,.3,1) both;
 }
 .sender {
   display: flex;
@@ -217,16 +217,16 @@
   opacity: 1;
 }
 .pendingFirst {
-  animation: pendingOut 0.25s 2.9s both;
+  animation: pendingOut 0.25s 2s both;
 }
 .pendingSecond {
-  animation: pendingOut 0.25s 4.2s both;
+  animation: pendingOut 0.25s 3s both;
 }
 .doneFirst {
-  animation: doneIn 0.3s 2.9s both;
+  animation: doneIn 0.3s 2s both;
 }
 .doneSecond {
-  animation: doneIn 0.3s 4.2s both;
+  animation: doneIn 0.3s 3s both;
 }
 .serviceTitle {
   font-size: 21px;
@@ -276,15 +276,15 @@
   stroke-width: 2.5;
 }
 .calendarOutcome {
-  animation: outcomeIn 0.45s 5.9s both;
+  animation: outcomeIn 0.45s 4.4s both;
 }
 .emailOutcome {
-  animation: outcomeIn 0.45s 6.5s both;
+  animation: outcomeIn 0.45s 4.8s both;
 }
 @keyframes requestIn {
   from {
     opacity: 0;
-    transform: translateY(16px);
+    transform: translateY(26px) scale(.98);
   }
   to {
     opacity: 1;
@@ -294,7 +294,7 @@
 @keyframes messageIn {
   from {
     opacity: 0;
-    transform: translateY(19px);
+    transform: translateY(30px) scale(.98);
   }
   to {
     opacity: 1;
@@ -332,6 +332,12 @@
   to {
     transform: rotate(360deg);
   }
+}
+.scene[data-playback="static"] .canvas * {
+  animation: none !important;
+}
+.scene[data-playback="waiting"] .canvas * {
+  animation-play-state: paused !important;
 }
 @container (max-width:420px) {
   .canvas { padding-inline: 4px; gap: 30px; }

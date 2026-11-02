@@ -27,7 +27,7 @@
 .track {
   display: flex;
   width: max-content;
-  animation: travel 85s linear infinite;
+  animation: travel 52s linear infinite;
 }
 .list {
   display: flex;
@@ -55,7 +55,9 @@
   white-space: nowrap;
 }
 .chip img { width: 28px; height: 28px; object-fit: contain; }
-.viewport:hover .track { animation-play-state: paused; }
+@media (hover: hover) and (pointer: fine) {
+  .viewport:hover .track { animation-play-state: paused; }
+}
 @keyframes travel { to { transform: translateX(-50%); } }
 @media (max-width: 767px) {
   .section { padding: 26px 0 32px; }

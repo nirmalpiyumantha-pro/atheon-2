@@ -18,47 +18,47 @@ const highlights = [
   {
     icon: MessageSquareText,
     title: "Your customers don’t need the perfect words.",
-    text: "Typos, casual wording, half-explained requests—Atheon makes sense of the message and asks what’s missing.",
+    text: "Atheon understands typos, casual wording and incomplete requests, then asks for missing details to keep the conversation moving.",
   },
   {
     icon: AudioLines,
     title: "A photo. A voice note. Work can start there.",
-    text: "Customers can show the problem or say what they need. Atheon picks out the details to move the request forward.",
+    text: "Customers can share photos, screenshots or voice notes. Atheon picks out the useful details to keep their request moving forward.",
   },
   {
     icon: Languages,
     title: "Make every customer feel understood.",
-    text: "Let customers speak in their preferred language. Atheon responds using your business information, in the languages you support.",
+    text: "Customers can speak in their preferred language. Atheon replies using your business information in the languages your business supports.",
   },
   {
     icon: Plug,
     title: "Fits into your business from the conversation onward.",
-    text: "Connect Atheon to your existing tools so it can check availability, update records and complete agreed tasks while the conversation continues.",
+    text: "Atheon connects to your existing tools to check availability, update records and complete agreed tasks as the conversation continues.",
   },
 ]
 const supporting = [
   {
     icon: Workflow,
     title: "Completes an entire job independently",
-    text: "Works through multiple steps and tools to reach a result.",
+    text: "Atheon independently works through multiple steps and connected tools to complete an entire job from request to result.",
   },
   {
     icon: History,
     title: "Remembers returning customers",
-    text: "Uses previous conversations and preferences so customers don’t start over.",
+    text: "Atheon uses previous conversations and customer preferences to keep returning customers from having to start over.",
   },
   {
     icon: BellRing,
     title: "Takes initiative",
-    text: "Follows up on unfinished enquiries, sends reminders and flags issues without waiting for another message.",
+    text: "Atheon follows up on unfinished enquiries, sends reminders and flags issues without waiting for another message.",
   },
 ]
 export function CustomAgents() {
   return (
     <div className={s.background}>
       <Container id="custom-agents">
-        <div className={s.intro} data-reveal>
-          <div className={s.copy}>
+        <div className={s.intro}>
+          <div className={s.copy} data-reveal>
             <span className="section-tag">The Atheon AI agent</span>
             <h2>
               Your new employee.
@@ -74,7 +74,7 @@ export function CustomAgents() {
               <ArrowUpRight size={17} aria-hidden="true" />
             </EnquiryLink>
           </div>
-          <figure className={s.art}>
+          <figure className={s.art} data-reveal data-reveal-variant="scale" data-reveal-delay="1">
             <Image
               src={illustration}
               alt="Atheon’s circuit logo connects language, voice, images and business systems."
@@ -82,9 +82,9 @@ export function CustomAgents() {
             />
           </figure>
         </div>
-        <div className={s.highlights} data-reveal>
-          {highlights.map(({ icon: Icon, title, text }) => (
-            <article key={title}>
+        <div className={s.highlights}>
+          {highlights.map(({ icon: Icon, title, text }, index) => (
+            <article key={title} data-reveal data-reveal-delay={index}>
               <span className={s.icon}>
                 <Icon size={24} strokeWidth={1.6} aria-hidden="true" />
               </span>
@@ -93,11 +93,11 @@ export function CustomAgents() {
             </article>
           ))}
         </div>
-        <div className={s.more} data-reveal>
-          <h3>Responsibility. Memory. Initiative.</h3>
+        <div className={s.more}>
+          <h3 data-reveal>Responsibility. Memory. Initiative.</h3>
           <div className={s.supporting}>
-            {supporting.map(({ icon: Icon, title, text }) => (
-              <article key={title}>
+            {supporting.map(({ icon: Icon, title, text }, index) => (
+              <article key={title} data-reveal data-reveal-delay={index}>
                 <Icon size={23} strokeWidth={1.6} aria-hidden="true" />
                 <h4>{title}</h4>
                 <p>{text}</p>

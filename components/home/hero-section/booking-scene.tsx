@@ -52,9 +52,37 @@ function AtheonHeader() {
 }
 
 export function BookingScene() {
+  const scene = useRef<HTMLElement>(null)
+  const [playback, setPlayback] = useState("static")
+  useEffect(() => {
+    const element = scene.current
+    const motion = window.matchMedia("(prefers-reduced-motion: reduce)")
+    if (!element || motion.matches || !("IntersectionObserver" in window)) return
+    let started = false
+    const observer = new IntersectionObserver((entries) => {
+      if (started || !entries.some((entry) => entry.isIntersecting)) return
+      started = true
+      setPlayback("playing")
+      observer.disconnect()
+    }, { threshold: 0.12 })
+    setPlayback("waiting")
+    observer.observe(element)
+    const onMotionChange = () => {
+      if (!motion.matches) return
+      observer.disconnect()
+      setPlayback("static")
+    }
+    motion.addEventListener("change", onMotionChange)
+    return () => {
+      observer.disconnect()
+      motion.removeEventListener("change", onMotionChange)
+    }
+  }, [])
   return (
     <figure
+      ref={scene}
       className={s.scene}
+      data-playback={playback}
       aria-label="Example of a customer request becoming a confirmed service visit"
     >
       <figcaption className={s.srOnly}>

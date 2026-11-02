@@ -31,9 +31,9 @@ export function SecuritySection() {
           hosting and handling requirements with you before launch.
         </p>
       </header>
-      <div className={s.details} data-reveal>
-        {details.map(({ icon: Icon, title, text }) => (
-          <article key={title}>
+      <div className={s.details}>
+        {details.map(({ icon: Icon, title, text }, index) => (
+          <article key={title} data-reveal data-reveal-delay={index}>
             <Icon size={25} strokeWidth={1.6} aria-hidden="true" />
             <h3>{title}</h3>
             <p>{text}</p>

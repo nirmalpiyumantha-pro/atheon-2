@@ -15,7 +15,7 @@ const apps = [
 export function IntegrationsRibbon() {
   return (
     <section className={s.section} aria-labelledby="integrations-title">
-      <header className={s.header}>
+      <header className={s.header} data-reveal>
         <h2 id="integrations-title" className={s.heading}>
           Connected to the <span className="heading-accent">tools you already use.</span>
         </h2>

@@ -36,13 +36,11 @@ export function PracticalFaqs() {
             title="Before we get started."
             description="A few practical answers about choosing, building and running your automation."
           />
-          <div className={s.faqList} data-reveal data-reveal-delay="1">
-            {faqsData.map((faq) => (
-              <Faq
-                key={faq.id}
-                title={faq.title}
-                description={faq.description}
-              />
+          <div className={s.faqList}>
+            {faqsData.map((faq, index) => (
+              <div key={faq.id} data-reveal data-reveal-delay={index % 3}>
+                <Faq title={faq.title} description={faq.description} />
+              </div>
             ))}
           </div>
         </div>
