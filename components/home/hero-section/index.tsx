@@ -16,8 +16,7 @@ export function Index() {
           </h1>
           <p>
             Atheon designs, builds and maintains custom AI agents and business
-            automations. We connect your tools and shape each system around your
-            processes.
+            automations
           </p>
           <div className="hero-actions">
             <EnquiryLink className="button" interest="demo">

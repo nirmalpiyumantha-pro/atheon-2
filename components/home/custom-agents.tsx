@@ -6,9 +6,9 @@ import {
   AudioLines,
   Languages,
   Plug,
-  BookOpen,
   Workflow,
-  UserRoundCheck,
+  History,
+  BellRing,
 } from "lucide-react"
 import Container from "@/components/container"
 import illustration from "@/assets/images/atheon-agent-capabilities.webp"
@@ -17,40 +17,40 @@ import s from "./custom-agents.module.css"
 const highlights = [
   {
     icon: MessageSquareText,
-    title: "Understands how people actually talk",
-    text: "Understands everyday wording, typos and short messages. Asks a follow-up when something is unclear.",
+    title: "Your customers don’t need the perfect words.",
+    text: "Typos, casual wording, half-explained requests—Atheon makes sense of the message and asks what’s missing.",
   },
   {
     icon: AudioLines,
-    title: "Works with images and voice",
-    text: "Picks out useful details from photos, screenshots and voice notes to continue the conversation.",
+    title: "A photo. A voice note. Work can start there.",
+    text: "Customers can show the problem or say what they need. Atheon picks out the details to move the request forward.",
   },
   {
     icon: Languages,
-    title: "Replies in your customers’ languages",
-    text: "Answers in the languages your business supports, using your business information.",
+    title: "Make every customer feel understood.",
+    text: "Let customers speak in their preferred language. Atheon responds using your business information, in the languages you support.",
   },
   {
     icon: Plug,
-    title: "Connects to the systems you already use",
-    text: "Connects to your CRM, calendar and other tools to find information and complete tasks.",
+    title: "Fits into your business from the conversation onward.",
+    text: "Connect Atheon to your existing tools so it can check availability, update records and complete agreed tasks while the conversation continues.",
   },
 ]
 const supporting = [
   {
-    icon: BookOpen,
-    title: "Answers from your business knowledge",
-    text: "Uses your approved documents, FAQs and policies to answer questions.",
-  },
-  {
     icon: Workflow,
-    title: "Turns conversations into action",
-    text: "Captures enquiries, updates records and books appointments through agreed workflows.",
+    title: "Completes an entire job independently",
+    text: "Works through multiple steps and tools to reach a result.",
   },
   {
-    icon: UserRoundCheck,
-    title: "Knows when to involve your team",
-    text: "Asks for approval when needed and hands complex issues to your team with context.",
+    icon: History,
+    title: "Remembers returning customers",
+    text: "Uses previous conversations and preferences so customers don’t start over.",
+  },
+  {
+    icon: BellRing,
+    title: "Takes initiative",
+    text: "Follows up on unfinished enquiries, sends reminders and flags issues without waiting for another message.",
   },
 ]
 export function CustomAgents() {
@@ -61,9 +61,9 @@ export function CustomAgents() {
           <div className={s.copy}>
             <span className="section-tag">The Atheon AI agent</span>
             <h2>
-              Built for real conversations.
+              Your new employee.
               <br />
-              <span className="heading-accent">Connected to real work.</span>
+              <span className="heading-accent">Built to get things done.</span>
             </h2>
             <p>
               An AI agent built around your business process, connecting customer
@@ -94,7 +94,7 @@ export function CustomAgents() {
           ))}
         </div>
         <div className={s.more} data-reveal>
-          <h3>More than a helpful reply.</h3>
+          <h3>Responsibility. Memory. Initiative.</h3>
           <div className={s.supporting}>
             {supporting.map(({ icon: Icon, title, text }) => (
               <article key={title}>
