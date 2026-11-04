@@ -1,22 +1,17 @@
+import { sendEmail, type EmailEnvironment, type EmailSender } from "../lib/server/email.ts";
+import { initialState } from "../lib/email-schema.ts";
+declare const __STATIC_FILES__: string;
 // The build injects the unchanged Next.js export here so this single Worker
 // can serve the website and its private email credentials on the same origin.
-const staticFiles = /* STATIC_FILES */ {};
-const recipient = "contact@atheonworks.com";
-const interests = {
-  general: "Help me choose / general enquiry", demo: "Book a demo",
-  managed: "Atheon-managed subscription", infrastructure: "Deployment on my infrastructure",
-  agent: "Custom AI agent", knowledge: "Company knowledge & search",
-  invoices: "Invoice processing", scheduling: "Service scheduling",
-  support: "Customer support automation",
-};
-const attempts = new Map();
-const emailPattern = /^[^\s<>@]+@[^\s<>@]+\.[^\s<>@]+$/;
+type StaticFile = { type: string; body: string; etag: string };
+const staticFiles: Record<string, StaticFile> = JSON.parse(typeof __STATIC_FILES__ === "undefined" ? "{}" : __STATIC_FILES__);
+const attempts = new Map<string, { count: number; until: number }>();
 const uuidPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
-const json = (body, status = 200) => Response.json(body, {
+const json = (body: unknown, status = 200) => Response.json(body, {
   status, headers: { "Cache-Control": "no-store", "X-Content-Type-Options": "nosniff" },
 });
 
-async function readBody(request) {
+async function readBody(request: Request) {
   if (Number(request.headers.get("content-length")) > 16384) throw new Error("large");
   const reader = request.body?.getReader();
   if (!reader) throw new Error("invalid");
@@ -34,7 +29,7 @@ async function readBody(request) {
   } finally { reader.releaseLock(); }
 }
 
-export async function handleContact(request, env = {}, send = fetch) {
+export async function handleContact(request: Request, env: EmailEnvironment = {}, send?: EmailSender) {
   if (request.method !== "POST") return json({ error: "Use POST to send an enquiry." }, 405);
   const origin = request.headers.get("origin");
   const allowedOrigins = new Set([new URL(request.url).origin,
@@ -43,27 +38,10 @@ export async function handleContact(request, env = {}, send = fetch) {
   if (!(request.headers.get("content-type") || "").includes("application/json")) return json({ error: "Invalid request format." }, 415);
   let input;
   try { input = await readBody(request); }
-  catch (error) { return json({ error: error.message === "large" ? "Your message is too large." : "Please check the form and try again." }, error.message === "large" ? 413 : 400); }
+  catch (error) { return json({ error: error instanceof Error && error.message === "large" ? "Your message is too large." : "Please check the form and try again." }, error instanceof Error && error.message === "large" ? 413 : 400); }
   if (!input || typeof input !== "object" || Array.isArray(input)) return json({ error: "Invalid enquiry." }, 400);
   if (input.website) return json({ error: "Unable to send this enquiry." }, 400);
-  const name = typeof input.name === "string" ? input.name.trim() : "";
-  const email = typeof input.email === "string" ? input.email.trim() : "";
-  const message = typeof input.message === "string" ? input.message.trim() : "";
-  const interest = typeof input.interest === "string" ? input.interest : "";
-  const errors = {};
-  if (!name || name.length > 255 || /[\r\n]/.test(name)) errors.name = "Enter your name (up to 255 characters).";
-  if (!emailPattern.test(email) || email.length > 254 || /[\r\n]/.test(email)) errors.email = "Enter a valid email address.";
-  if (!message || message.length > 1024) errors.message = "Enter a message of up to 1,024 characters.";
-  if (!Object.hasOwn(interests, interest)) errors.interest = "Choose an area of interest.";
-  if (!uuidPattern.test(String(input.submissionId || ""))) errors.form = "Please refresh the page and try again.";
-  if (Object.keys(errors).length) return json({ error: "Please check the highlighted fields.", errors }, 400);
-
-  const key = String(env.RESEND_API_KEY || "").trim();
-  const from = String(env.FROM_EMAIL || "").trim();
-  const senderAddress = from.match(/<([^<>]+)>$/)?.[1] || from;
-  if (!key || !emailPattern.test(senderAddress) || /[\r\n]/.test(from)) {
-    return json({ error: "Online sending is temporarily unavailable. Please email contact@atheonworks.com directly." }, 503);
-  }
+  if (!uuidPattern.test(String(input.submissionId || ""))) return json({ error: "Please refresh the page and try again." }, 400);
   // Best-effort abuse control per running instance; no persistent visitor data.
   const ip = env.CONTACT_CLIENT_IP || request.headers.get("cf-connecting-ip");
   if (ip) {
@@ -74,32 +52,14 @@ export async function handleContact(request, env = {}, send = fetch) {
     entry.count += 1;
     attempts.set(ip, entry);
   }
-  const label = interests[interest];
-  const text = ["New Atheon website enquiry", "",
-    `Name: ${name}`, `Email: ${email}`, `Interested in: ${label}`,
-    `Received (UTC): ${new Date().toISOString()}`, `Website: ${new URL(request.url).origin}`,
-    "", "Message:", message].join("\n");
-  try {
-    const response = await send("https://api.resend.com/emails", {
-      method: "POST",
-      headers: { "Authorization": `Bearer ${key}`, "Content-Type": "application/json",
-        "Idempotency-Key": `atheon-enquiry/${input.submissionId}` },
-      body: JSON.stringify({ from, to: [recipient], reply_to: email,
-        subject: `${interest === "demo" ? "Demo request" : "Project enquiry"}: ${label} | ${name}`, text }),
-      signal: AbortSignal.timeout(12000),
-    });
-    const result = await response.json().catch(() => null);
-    if (!response.ok || typeof result?.id !== "string" || !result.id) {
-      return json({ error: "Your message could not be sent. Please try again or email contact@atheonworks.com directly." }, 502);
-    }
-    return json({ success: true });
-  } catch {
-    return json({ error: "We couldn’t confirm sending. Please try again; your message is still here." }, 502);
-  }
+  const data = new FormData();
+  for (const [name, value] of Object.entries(input)) if (typeof value === "string") data.set(name, value);
+  const result = await sendEmail(initialState, data, env, send);
+  return json({ success: result.success, errors: result.errors, error: result.notice }, result.status);
 }
 
 export default {
-  async fetch(request, env = {}) {
+  async fetch(request: Request, env: EmailEnvironment = {}) {
     const url = new URL(request.url);
     if (url.pathname === "/api/contact" || url.pathname === "/api/contact/") return handleContact(request, env);
     if (request.method !== "GET" && request.method !== "HEAD") return new Response("Method not allowed", { status: 405 });

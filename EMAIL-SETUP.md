@@ -1,6 +1,6 @@
 # Contact email setup
 
-The form posts to `/api/contact` on the website's own server. Every accepted enquiry is sent to **contact@atheonworks.com**, including the visitor's name, email, selected interest, full message and submission time. Replies go to the visitor's email address.
+The form uses the supplied `useActionState`, Valibot schema and Resend email flow, adapted to the current static export. It posts to `/api/contact` on the website's own server. Every accepted enquiry is sent to **contact@atheonworks.com**, including the visitor's name, email, selected interest, full message and submission time. Replies go to the visitor's email address.
 
 ## Required production configuration
 
@@ -20,7 +20,7 @@ Keep the key secret. Do not put it in GitHub, client code, a `NEXT_PUBLIC_` vari
 
 ## Run and deploy
 
-Use Node.js 22.13 or newer:
+Use Node.js 22.13 or newer. All custom server, build and test code uses TypeScript, with no `.mjs` source files:
 
 ```bash
 npm ci

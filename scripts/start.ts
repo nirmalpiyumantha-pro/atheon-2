@@ -1,5 +1,5 @@
 import { readFile } from "node:fs/promises";
-import { createRuntime, loadEnvironment } from "./http-runtime.mjs";
+import { createRuntime, loadEnvironment } from "./http-runtime.ts";
 loadEnvironment();
 const source = await readFile("dist/server/index.js", "utf8");
 const { default: worker } = await import(`data:text/javascript;base64,${Buffer.from(source).toString("base64")}`);
